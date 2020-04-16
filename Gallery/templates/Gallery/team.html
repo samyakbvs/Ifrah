@@ -1,0 +1,52 @@
+{% extends 'Gallery/base.html' %}
+
+
+{%  block content %}
+<div style="padding-top:150px;"class="hero-wrap hero-bread" style="background-image: url('images/bg_6.jpg');">
+    <div class="container">
+      <div class="row no-gutters slider-text align-items-center justify-content-center">
+        <div class="col-md-9 ftco-animate text-center">
+          <h1 class="mb-0 bread">Meet the team</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section style="padding-top:1em;"class="ftco-section">
+    <div class="container">
+      <div class="row d-flex">
+        {% for member in Team %}
+
+        <div class="col-md-4 d-flex ftco-animate">
+          <div class="blog-entry align-self-stretch" style="min-width:100%;">
+            <a href="blog-single.html" class="block-20" style="background-image: url({{ member.image.url }});">
+            </a>
+            <div class="text mt-3 d-block pl-md-5">
+              <h3 class="heading mt-3"><a href="#">{{ member.name }}</a></h3>
+              <div class="meta mb-3">
+                <div><a href="#">{{ member.post }}</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+      <!-- <div class="row mt-5">
+        <div class="col text-center">
+          <div class="block-27">
+            <ul>
+              <li><a href="#">&lt;</a></li>
+              <li class="active"><span>1</span></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+              <li><a href="#">&gt;</a></li>
+            </ul>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </section>
+  {% endblock %}
