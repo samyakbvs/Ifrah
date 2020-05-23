@@ -22,7 +22,7 @@ class Login(APIView):
 
 class Signup(APIView):
     def get(self,request):
-        return render(request,'Gallery/Signup.html')
+        return render(request,'Gallery/signup.html')
     def post(self,request):
         if request.POST['password'] == request.POST['verifypassword']:
             try:
