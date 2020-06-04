@@ -1,10 +1,15 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from rest_framework.views import APIView
 from .models import UserProfile,Painting,Cart,Order,Member
 from django.contrib.auth.models import User
 from django.contrib import auth
+from .PayTm import Checksum
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+import uuid
+
+MERCHANT_KEY = 'RFXkcY7NUTsKgces'
 
 # Create your views here.
 class Profile(APIView):
@@ -63,24 +68,95 @@ class Checkout(APIView):
         for painting in paintings:
             bill += painting.price
         return render(request,'Gallery/checkout.html',{'paintings':paintings,'bill':bill})
-
-class ConfirmOrder(APIView):
-    @method_decorator(login_required)
-    def get(self,request):
+    def post(self,request):
+        # amount = request.POST['Amount']
+        # uid = str(uuid.uuid1())
+        # donation = Donation(amount=amount,user=request.user,uid=uid)
+        # donation.save()
         user = request.user
+        uid = str(uuid.uuid1())
         paintings = user.cart.paintings.all()
         order = Order.objects.create(user=user)
+        order.uid = uid
         bill = 0
         for painting in paintings:
-            bill += painting.price
             order.paintings.add(painting)
-        order.bill = bill
+            bill += painting.price
+        order.bill =  bill + 10
         order.save()
-        for painting in user.cart.paintings.all():
-            painting.sold = True
-            painting.save()
-        user.cart.paintings.clear()
-        return redirect('checkout')
+
+        param_dict = {
+            'MID':'DhKcem03471021583928',
+            'ORDER_ID': order.uid,
+            'TXN_AMOUNT': str(order.bill),
+            'CUST_ID': str(request.user.userprofile.email),
+            'INDUSTRY_TYPE_ID':'Retail',
+            'WEBSITE':'WEBSTAGING',
+            'CHANNEL_ID':'WEB',
+	        'CALLBACK_URL':'http://127.0.0.1:8000/gallery/confirm/'+str(order.uid)+'/',
+            # 'CALLBACK_URL':'http://127.0.0.1:8000/Account/ThankYou/DONATION/'+str(donation.uid)+'/',
+
+        }
+
+        param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(param_dict,MERCHANT_KEY)
+        return render(request, 'Gallery/paytm.html', {'param_dict':param_dict})
+
+
+@csrf_exempt
+def ConfirmOrder(request,uid):
+
+    form = request.POST
+    response_dict={}
+    for i in form.keys():
+        response_dict[i] = form[i]
+        if i == 'CHECKSUMHASH':
+            Temp_checksum = response_dict[i]
+    verify = Checksum.verify_checksum(response_dict,MERCHANT_KEY,Temp_checksum)
+    if verify:
+        if response_dict['RESPCODE'] == '01':
+            order =  get_object_or_404(Order,uid=uid)
+            user = order.user
+            order.succesful = True
+            order.save()
+            for painting in user.cart.paintings.all():
+                painting.sold = True
+                painting.save()
+            order.user.cart.paintings.clear()
+            return render(request,'Gallery/ThankYou.html')
+        else:
+            order =  get_object_or_404(Donation,uid=uid)
+            order.delete()
+            return render(request,'Gallery/ThankYou.html',{'error':'An error occured, please try again later!'})
+    else:
+        return render(request,'Gallery/ThankYou.html',{'error':'An error occured, please try again later!'})
+
+# class ConfirmOrder(APIView):
+#     @method_decorator(login_required)
+#     @csrf_exempt
+#     def post(self,request,uid):
+#         form = request.POST
+#         response_dict={}
+#         for i in form.keys():
+#             response_dict[i] = form[i]
+#             if i == 'CHECKSUMHASH':
+#                 Temp_checksum = response_dict[i]
+#         verify = Checksum.verify_checksum(response_dict,MERCHANT_KEY,Temp_checksum)
+#         if verify:
+#             if response_dict['RESPCODE'] == '01':
+#                 order =  get_object_or_404(Order,uid=uid)
+#                 order.succesful = True
+#                 order.save()
+#                 for painting in user.cart.paintings.all():
+#                     painting.sold = True
+#                     painting.save()
+#                 order.user.cart.paintings.clear()
+#                 return render(request,'Gallery/ThankYou.html')
+#             else:
+#                 order =  get_object_or_404(Donation,uid=uid)
+#                 order.delete()
+#                 return render(request,'Gallery/ThankYou.html',{'error':'An error occured, please try again later!'})
+#         else:
+#             return render(request,'Gallery/ThankYou.html',{'error':'An error occured, please try again later!'})
 
 class Logout(APIView):
     @method_decorator(login_required)
@@ -110,3 +186,10 @@ class Team(APIView):
 class About(APIView):
     def get(self,request):
         return render(request,'Gallery/about.html')
+
+# class Donate(APIView):
+#
+#         param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(param_dict,MERCHANT_KEY)
+#         return render(request, 'Account/paytm.html', {'param_dict':param_dict})
+#     def get(self,request):
+#         return render(request,'Account/Donate.html')

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    {% if error %}
+    <h1>error</h1>
+    {% else %}
+    <h1>Success</h1>
+    {% endif %}
+    <a href="{% url 'viewOrders' %}">Orders</a>
+  </body>
+</html>

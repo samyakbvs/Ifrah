@@ -25,7 +25,7 @@ SECRET_KEY = '!+j#e$cxvux@k5^l%o-s5*g(0i=d&gl2pq--ox3xb0ja6@4p69'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['206.189.136.22','ifrah.in']
+ALLOWED_HOSTS = ['206.189.136.22','ifrah.in','127.0.0.1']
 
 
 # Application definition

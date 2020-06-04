@@ -38,6 +38,7 @@ class Cart(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='orders')
     bill = models.BigIntegerField(default=0)
+    uid = models.CharField(max_length=264)
     paintings =  models.ManyToManyField(Painting,related_name='o_paintings')
 
     def __str__(self):
