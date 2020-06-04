@@ -115,7 +115,7 @@ def ConfirmOrder(request,uid):
         if response_dict['RESPCODE'] == '01':
             order =  get_object_or_404(Order,uid=uid)
             user = order.user
-            order.succesful = True
+            order.successful = True
             order.save()
             for painting in user.cart.paintings.all():
                 painting.sold = True

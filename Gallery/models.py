@@ -40,6 +40,7 @@ class Order(models.Model):
     bill = models.BigIntegerField(default=0)
     uid = models.CharField(max_length=264)
     paintings =  models.ManyToManyField(Painting,related_name='o_paintings')
+    successful = models.BooleanField(default=False)
 
     def __str__(self):
         return (self.user.userprofile.name + "'s cart")
