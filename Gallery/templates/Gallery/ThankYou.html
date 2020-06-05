@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
+  <head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <meta charset="utf-8">
     <title></title>
   </head>
   <body>
-    {% if error %}
-    <h1>error</h1>
-    {% else %}
-    <h1>Success</h1>
-    {% endif %}
-    <a href="{% url 'viewOrders' %}">Orders</a>
+    <div class="container">
+      <div style="margin: 0 auto;"class="jumbotron">
+        {% if error %}
+        <h1>error</h1>
+        {% else %}
+        <h1>Success</h1>
+        {% endif %}
+        <a href="{% url 'viewOrders' %}">Orders</a>
+      </div>
+    </div>
+
   </body>
 </html>
