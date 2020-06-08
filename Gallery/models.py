@@ -17,13 +17,13 @@ class UserProfile(models.Model):
         return self.name
 
 class Painting(models.Model):
-    category = models.CharField(max_length=264)
+    title = models.CharField(max_length=264)
     artist = models.CharField(max_length=264)
     price = models.IntegerField()
     height = models.IntegerField()
     width = models.IntegerField()
-    medium = models.CharField(max_length=264)
     sold = models.BooleanField(default=False)
+    description = models.TextField()
 
     def __str__(self):
         return self.category

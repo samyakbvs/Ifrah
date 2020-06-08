@@ -5,14 +5,15 @@
     <title></title>
   </head>
   <body>
-    <div class="container">
+
+    <div style='margin-top: 70px;'class="container">
       <div style="margin: 0 auto;"class="jumbotron">
         {% if error %}
         <h1>error</h1>
         {% else %}
         <h1>Success</h1>
         {% endif %}
-        <a href="{% url 'viewOrders' %}">Orders</a>
+        <a href="{% url 'viewOrders' %}">View your orders</a>
       </div>
     </div>
 
