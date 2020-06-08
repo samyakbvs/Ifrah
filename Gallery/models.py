@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
+from os.path import join as path_join
+
 # Create your models here.
 
 class UserProfile(models.Model):
@@ -25,7 +27,7 @@ class Painting(models.Model):
     width = models.IntegerField()
     sold = models.BooleanField(default=False)
     description = models.TextField()
-    image = models.ImageField(upload_to='media/',default=temp_img)
+    image = models.ImageField(upload_to='media/',default=TempImg)
 
     def __str__(self):
         return self.title
@@ -50,7 +52,7 @@ class Order(models.Model):
 class Member(models.Model):
     name = models.CharField(max_length=264)
     post = models.CharField(max_length=264)
-    image = models.ImageField(image = models.ImageField(upload_to='media/'))
+    image = models.ImageField(upload_to='media/')
 
     def __str__(self):
         return self.name
