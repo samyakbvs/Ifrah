@@ -27,7 +27,7 @@ class Painting(models.Model):
     width = models.IntegerField()
     sold = models.BooleanField(default=False)
     description = models.TextField()
-    Image = models.ImageField(upload_to='media/',default=TempImg)
+    image = models.ImageField(upload_to='media/',default=TempImg)
 
     def __str__(self):
         return self.title
