@@ -91,7 +91,11 @@
 			    						</div>
 			    						<div class="rating">
 			    							<p class="text-right">
+                          {% if painting.sold %}
+                          <span>Sold</span>
+                          {% else %}
                           <a href="{% url 'viewDetails' painting.id %}"><span>View details</span></a>
+                          {% endif %}
 			    								<!-- <span class="ion-ios-star-outline"></span>
 			    								<span class="ion-ios-star-outline"></span>
 			    								<span class="ion-ios-star-outline"></span>
@@ -102,8 +106,10 @@
 
 		    						</div>
                     <p class="bottom-area d-flex">
+                      {% if painting.sold %}
+                      {% else %}
                       <a href="{% url 'addToCart' painting.id %}" class="add-to-cart"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
-
+{% endif %}
                     </p>
 		    					</div>
 		    				</div>

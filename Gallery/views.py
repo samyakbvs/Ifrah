@@ -40,7 +40,7 @@ class Home(APIView):
     def get(self,request):
         user = request.user
         # paintings = user.cart.paintings.all()
-        paintings = Painting.objects.exclude(c_paintings = user.cart).exclude(sold=True)
+        paintings = Painting.objects.exclude(c_paintings = user.cart)
         print(len(paintings))
         return render(request,'Gallery/home.html',{'paintings':paintings})
 

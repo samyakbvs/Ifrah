@@ -54,7 +54,10 @@
 	             	</span>
 	          	</div> -->
           	</div>
+            {% if painting.sold %}
+            {% else %}
           	<p><a href="{% url 'addToCart' painting.id %}" class="btn btn-primary py-3 px-5">Add to Cart</a></p>
+            {% endif %}
     			</div>
     		</div>
     	</div>
