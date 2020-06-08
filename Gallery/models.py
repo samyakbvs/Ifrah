@@ -17,6 +17,7 @@ class UserProfile(models.Model):
         return self.name
 
 class Painting(models.Model):
+    TempImg = path_join('media', 'anaya.jpg')
     title = models.CharField(max_length=264)
     artist = models.CharField(max_length=264)
     price = models.IntegerField()
@@ -24,7 +25,7 @@ class Painting(models.Model):
     width = models.IntegerField()
     sold = models.BooleanField(default=False)
     description = models.TextField()
-    image = models.ImageField()
+    image = models.ImageField(upload_to='media/',default=temp_img)
 
     def __str__(self):
         return self.title
@@ -49,7 +50,7 @@ class Order(models.Model):
 class Member(models.Model):
     name = models.CharField(max_length=264)
     post = models.CharField(max_length=264)
-    image = models.ImageField(upload_to='media/')
+    image = models.ImageField(image = models.ImageField(upload_to='media/'))
 
     def __str__(self):
         return self.name
