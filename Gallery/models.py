@@ -26,7 +26,7 @@ class Painting(models.Model):
     description = models.TextField()
 
     def __str__(self):
-        return self.category
+        return self.title
 
 class Cart(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
