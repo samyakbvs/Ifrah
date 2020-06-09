@@ -82,7 +82,7 @@ class Checkout(APIView):
         for painting in paintings:
             order.paintings.add(painting)
             bill += painting.price
-        order.bill =  50
+        order.bill =  bill + 50
         order.save()
 
         param_dict = {
