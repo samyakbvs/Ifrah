@@ -26,13 +26,13 @@
 						        <th>Image</th>
 						        <th>Product</th>
 						        <th>Price</th>
-						       <th>Status</th>
 
 						      </tr>
 						    </thead>
 						    <tbody>
                   {% for order in orders.all %}
                   {% for painting in order.paintings.all %}
+                  {% if order.successful %}
 						      <tr class="text-center">
 
 
@@ -44,15 +44,13 @@
 						        </td>
 
 						        <td class="price">₹{{ painting.price }}</td>
-                    {% if order.successful %}
-                    <td>Succesful</td>
-                    {% else %}
-                    <td>Unsuccessful</td>
-                    {% endif %}
+
+
 
 
 						      </tr><!--
                      END TR-->
+                     {% else %}{% endif %}
 {% endfor %}
 {% endfor %}
 						    </tbody>
