@@ -38,8 +38,8 @@
 						        <td style="max-width: 50px;" class="image-prod"><div class="img" style="background-image:url({{ painting.photo.url }});"></div></td>
 
 						        <td class="product-name">
-						        	<h3><a href="{% url 'viewDetails' painting.id %}"></a></h3>
-						        	<p>{{ painting.title }}</p>
+						        	<h3><a href="{% url 'viewDetails' painting.id %}"><p>{{ painting.title }}</p></a></h3>
+
 						        </td>
 
 						        <td class="price">₹{{ painting.price }}</td>
