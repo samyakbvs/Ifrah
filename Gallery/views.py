@@ -40,7 +40,7 @@ class Home(APIView):
     def get(self,request):
         user = request.user
         # paintings = user.cart.paintings.all()
-        paintings = Painting.objects.exclude(c_paintings__isnull = False)
+        paintings = Painting.objects.exclude(c_paintings= user.cart)
         print(len(paintings))
         return render(request,'Gallery/home.html',{'paintings':paintings})
 
@@ -82,7 +82,7 @@ class Checkout(APIView):
         for painting in paintings:
             order.paintings.add(painting)
             bill += painting.price
-        order.bill =  bill + 50
+        order.bill =  50
         order.save()
 
         param_dict = {
@@ -119,6 +119,7 @@ def ConfirmOrder(request,uid):
             order.save()
             for painting in user.cart.paintings.all():
                 painting.sold = True
+                painting.c_paintings.clear()
                 painting.save()
             order.user.cart.paintings.clear()
             return render(request,'Gallery/ThankYou.html')
