@@ -34,7 +34,7 @@ class Painting(models.Model):
 
 class Cart(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    paintings =  models.ManyToManyField(Painting,related_name='c_paintings')
+    paintings =  models.ManyToManyField(Painting,related_name='c_paintings',blank=True)
 
     def __str__(self):
         return (self.user.userprofile.name + "'s cart")
