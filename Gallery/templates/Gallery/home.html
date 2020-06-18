@@ -84,7 +84,7 @@
 		    				<div class="product">
 		    					<a href="{% url 'viewDetails' painting.id %}" class="img-prod"><img class="img-fluid" src="{{ painting.photo.url }}" alt="Colorlib Template">
                     {% if painting.sale %}
-		    						<span class="status">30%</span>
+		    						<span style="color: white;"class="status">Sale</span>
                     {% endif %}
 		    					</a>
 		    					<div class="text pt-3 px-3">
