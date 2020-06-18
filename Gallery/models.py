@@ -26,6 +26,7 @@ class Painting(models.Model):
     height = models.IntegerField()
     width = models.IntegerField()
     sold = models.BooleanField(default=False)
+    sale = models.BooleanField(default=False)
     description = models.TextField()
     photo = models.ImageField(upload_to='media/',default=TempImg)
 
