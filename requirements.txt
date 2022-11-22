@@ -20,7 +20,7 @@ idna==2.9
 jdcal==1.4.1
 oauthlib==3.1.0
 openpyxl==3.0.3
-Pillow==7.0.0
+Pillow==9.3.0
 psycopg2-binary==2.8.4
 pycparser==2.20
 pycrypto==2.6.1
